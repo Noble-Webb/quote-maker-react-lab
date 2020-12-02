@@ -7,8 +7,13 @@ export default (state = [], action) => {
       update = state.findIndex(quote => quote.update === action.update)
       return [...state.slice(0, update), ...state.slice(update +1) ];
     case "UPVOTE_QUOTE":
-      update =state.map(q => {
-        if(q.id === action.quoteId){
+      update = state.map(q => {
+        if(action.votes === undefined){
+          return {
+            ...q,
+            votes: 1
+          }
+        }else if(q.id === action.quoteId){
           return {
             ...q,
             votes: q.votes += 1
@@ -21,8 +26,13 @@ export default (state = [], action) => {
       return update
 
     case "DOWNVOTE_QUOTE":
-      update =state.map(q => {
-        if(q.id === action.quoteId && q.votes > 0){
+      update = state.map(q => {
+        if(action.votes === undefined){
+          return {
+            ...q,
+            votes: 1
+          }
+        }else if(q.id === action.quoteId && q.votes > 0){
           return {
             ...q,
             votes: q.votes -= 1
